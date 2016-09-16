@@ -48,7 +48,7 @@ function promptManager() {
         {
             type: "list",
             message: "Hello Manager, what would you like to do?",
-            choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product", "Exit Manager View"],
+            choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product","Remove Product", "Exit Manager View"],
             name: "choice"
         }
     ]).then(function (selection) {
@@ -66,6 +66,9 @@ function promptManager() {
                 break;
             case "Add New Product":
                 addProduct();
+                break;
+            case "Remove Product":
+                removeProduct();
                 break;
             case "Exit Manager View":
                 exit();
@@ -240,10 +243,53 @@ function addProduct() {
 
 }
 
+function removeProduct() {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Please enter the [ID] of the product you would like to remove.",
+            name: "id",
+            validate: function (value) {
+                var isValid = false;
+                //check to see if the id entered matches an id in the database
+                for (var index in stock) {
+                    if (stock[index].ItemID == value) {
+
+                        //if it does, return true and store the id and quantity for the next validation
+                        isValid = true;
+                    }
+                }
+                return (isValid) ? isValid : "Please enter a valid [ID]";
+            }
+        }
+        ]).then(function(res) {
+            connection.query('DELETE FROM Products where ItemID=?', [res.id], function(err, res) {
+                if (err)
+                    throw err;
+                stock = [];
+                manager();
+            });
+    });
+}
+
 function exit() {
     console.log("----------------------------------------------------------------------");
     console.log("                                GOODBYE                               ");
     console.log("----------------------------------------------------------------------");
+    //create a variable to run multiple queries
+    var queries = '';
+
+    for (var i in stock) {
+        //add a query to update the stock quantity in the databse for each id from the stock array to the query list
+        //the semicolon and space are key so that it logs multiple queries in the variable to run
+        queries += mysql.format("UPDATE Products SET StockQuantity=? WHERE ItemID=?; ", [stock[i].StockQuantity, stock[i].ItemID]);
+    }
+
+    //run all the queries to update the SQL database
+    var sentQuery = connection.query(queries);
+
+    //end the connection!
+    connection.end();
 }
 
 manager();
