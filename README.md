@@ -28,33 +28,25 @@ var connection = mysql.createConnection({
 
 ### Challenge #1: Customer View (Minimum Requirement)
 
-- To run the customer view, cd into the folder that you forked/clone from github.
+- To run the customer view, cd into the folder that you forked/cloned from github.
 - After double checking that you have all the packages needed installed by running `npm install`, you can run `node BamazonCustomer.js` to run the customer view.
 - You will be able to see what is in stock and purchase items. You will also be able to edit your cart before you decide to checkout. 
 - One you checkout, your local `Bamazon` database will be updated to reflect the new inventory counts.
 - Below is a video of the customer view in action.
 
-**** customer view video here ****
+**** customer view video coming soon ****
 
 --------
 
 ### Challenge #2: Manager View (Next Level)
 
-* Create a new Node application called `BamazonManager.js`. Running this application will:
+- To run the manager view, cd into the folder that you forked/cloned from github.
+- After double checking that you have all the packages needed installed by running `npm install`, you can run `node BamazonManager.js` to run the customer view.
+- You will be able to see all the items in the database.
+- You can also add inventory to an item or add a new item which will also add the item to the local `Bamazon` SQL database.
+- Below is a video of the manager view in action.
 
-	* List a set of menu options: 
-		* View Products for Sale 
-		* View Low Inventory
-		* Add to Inventory
-		* Add New Product
-
-	* If a manager selects `View Products for Sale`, the app should list every available item: the item IDs, names, prices, and quantities.
-
-	* If a manager selects `View Low Inventory`, then it should list all items with a inventory count lower than five.
-
-	* If a manager selects `Add to Inventory`, your app should display a prompt that will let the manager "add more" of any item currently in the store. 
-
-	* If a manager selects `Add New Product`, it should allow the manager to add a completely new product to the store.
+**** manager view video coming soon ****
 
 --------
 
