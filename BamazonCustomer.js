@@ -4,7 +4,7 @@ var mysql = require('mysql');
 var clear = require('clear');
 var Table = require('cli-table');
 
-//createing the connection to the Bamazon database.
+//creating the connection to the Bamazon database.
 //you can run the Bamazon.sql script in your mySQL Workbench and then change your port, user, and password here
 var connection = mysql.createConnection({
     host: "localhost",
