@@ -52,6 +52,8 @@ var connection = mysql.createConnection({
 
 ### Challenge #3: Executive View (Final Level)
 
+**** executive view not completed yet ****
+
 1. Create a new MySQL table called `Departments`. Your table should include the following columns:
 
 	* DepartmentID
