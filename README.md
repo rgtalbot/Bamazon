@@ -4,11 +4,6 @@
 
 Bamazon is an Amazon-like storefront that runs in the terminal with node and utilizes a mySQL database to store information. The app can take in orders from customers and depete stock from the store's inventory.
 
-
-##### ******* NOT COMPLETED *******
-
-As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store. 
-
 ----------
 
 ### Installation Guide
