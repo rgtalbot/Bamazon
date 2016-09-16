@@ -23,6 +23,7 @@ connection.connect(function (err) {
 
 //variables for the items in stock from the database and the items to be added to the database
 var stock = [],
+    departments = [],
     newStock = [];
 
 //function to fetch all the stock in the database and store it locally in an array.
@@ -32,6 +33,9 @@ function manager() {
         if (err) throw err;
         for (var i = 0; i < res.length; i++) {
             stock.push(res[i]);
+            if (departments.indexOf(res[i].DepartmentName) === -1) {
+                departments.push(res[i].DepartmentName)
+            }
         }
         displayStock("ALL");
         promptManager();
@@ -65,6 +69,7 @@ function promptManager() {
                 break;
             case "Exit Manager View":
                 exit();
+                connection.end();
                 break;
         }
     })
@@ -78,34 +83,40 @@ function displayStock(string) {
         colWidths: [6, 32, 14, 14],
         style: {'padding-left': 2, 'padding-right': 2}
     });
-    for (var i = 0; i < stock.length; i++) {
-        var item = stock[i];
-        if (string === "ALL") {
-            //if the user selected view products for sale, "ALL" is sent to this function and all items are push to the table
+    if (string === "ALL") {
+        //if the user selected view products for sale, "ALL" is sent to this function and all items are push to the table
+        for (var i in stock) {
+            var item = stock[i];
             table.push([item.ItemID, item.ProductName, "$" + item.Price, item.StockQuantity]);
-            clear();
-            console.log("----------------------------------------------------------------------");
-            console.log("                         BAMAZON MANAGER VIEW                         ");
-            console.log("                                                                      ");
-            console.log("              HERE ARE ALL THE PRODUCTS WE CURRENTLY SELL             ");
-            console.log("----------------------------------------------------------------------");
-            //displays the table
-            console.log(table.toString());
-        } else if (string === "LOW") {
-            //if the user selected view low inventory, "LOW" is sent to this function and only items with less than 5 quantity are pushed to the table
+        }
+        clear();
+        console.log("----------------------------------------------------------------------");
+        console.log("                         BAMAZON MANAGER VIEW                         ");
+        console.log("                                                                      ");
+        console.log("              HERE ARE ALL THE PRODUCTS WE CURRENTLY SELL             ");
+        console.log("                                                                      ");
+        console.log("                   NEW PRODUCTS ARE MARKED WITH A N*                  ");
+        console.log("----------------------------------------------------------------------");
+        //displays the table
+        console.log(table.toString());
+    } else if (string === "LOW") {
+        //if the user selected view low inventory, "LOW" is sent to this function and only items with less than 5 quantity are pushed to the table
+        for (var i in stock) {
+            var item = stock[i];
             if (stock[i].StockQuantity <= 5) {
                 table.push([item.ItemID, item.ProductName, "$" + item.Price, item.StockQuantity]);
             }
-            clear();
-            console.log("----------------------------------------------------------------------");
-            console.log("                         BAMAZON MANAGER VIEW                         ");
-            console.log("                                                                      ");
-            console.log("                HERE IS WHAT ITEMS ARE LOW ON INVENTORY               ");
-            console.log("----------------------------------------------------------------------");
-            //displays the table
-            console.log(table.toString());
         }
+        clear();
+        console.log("----------------------------------------------------------------------");
+        console.log("                         BAMAZON MANAGER VIEW                         ");
+        console.log("                                                                      ");
+        console.log("                HERE IS WHAT ITEMS ARE LOW ON INVENTORY               ");
+        console.log("----------------------------------------------------------------------");
+        //displays the table
+        console.log(table.toString());
     }
+
 }
 
 function addInventory() {
@@ -125,7 +136,7 @@ function addInventory() {
                 var isValid = false;
                 //check to see if the id entered matches an id in the database
                 for (var index in stock) {
-                    if (stock[index].ItemID == parseInt(value)) {
+                    if (stock[index].ItemID == value) {
 
                         //if it does, return true and store the id and quantity for the next validation
                         isValid = true;
@@ -157,7 +168,7 @@ function addInventory() {
                 }
             }
         }
-    ]).then(function(res) {
+    ]).then(function (res) {
         //find the item in the stock array
         for (var i in stock) {
             if (stock[i].ItemID == res.id) {
@@ -171,13 +182,68 @@ function addInventory() {
 }
 
 function addProduct() {
-    console.log("not working yet");
-    connection.end();
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Please enter the name of the new product.",
+            name: "name"
+        },
+        {
+            type: "list",
+            message: "Please select the department for the new product.",
+            name: "department",
+            choices: departments
+        },
+        {
+            type: "input",
+            message: "Please enter the price of the new product.",
+            name: "price",
+            validate: function (value) {
+                if (isNaN(value) == false && value > 0) {
+                    return true;
+                } else {
+                    return "Please enter a valid price"
+                }
+            }
+        },
+        {
+            type: "input",
+            message: "Pleae enter the quantity of the new product.",
+            name: "quantity",
+            validate: function (value) {
+                if (isNaN(value) == false && value > 0) {
+                    if (value > 200) {
+                        return "We do not have the space for that much inventory";
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return "Please enter a valid number"
+                }
+            }
+        }
+    ]).then(function (res) {
+        connection.query('INSERT INTO Products SET ?', {
+            ProductName: res.name,
+            DepartmentName: res.department,
+            Price: parseFloat(res.price).toFixed(2),
+            StockQuantity: parseInt(res.quantity)
+        }, function (err, res) {
+            if (err)
+                throw err;
+            //empty stock array
+            stock = [];
+            //function to requery database and load stock array
+            manager();
+        });
+    });
+
 }
 
 function exit() {
-    console.log('goodbye');
-    connection.end();
+    console.log("----------------------------------------------------------------------");
+    console.log("                                GOODBYE                               ");
+    console.log("----------------------------------------------------------------------");
 }
 
 manager();
