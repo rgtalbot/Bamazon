@@ -72,7 +72,6 @@ function promptManager() {
                 break;
             case "Exit Manager View":
                 exit();
-                connection.end();
                 break;
         }
     })
@@ -97,8 +96,6 @@ function displayStock(string) {
         console.log("                         BAMAZON MANAGER VIEW                         ");
         console.log("                                                                      ");
         console.log("              HERE ARE ALL THE PRODUCTS WE CURRENTLY SELL             ");
-        console.log("                                                                      ");
-        console.log("                   NEW PRODUCTS ARE MARKED WITH A N*                  ");
         console.log("----------------------------------------------------------------------");
         //displays the table
         console.log(table.toString());
