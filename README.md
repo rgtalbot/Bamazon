@@ -26,7 +26,7 @@ var connection = mysql.createConnection({
 
 --------
 
-### Challenge #1: Customer View (Minimum Requirement)
+### Customer View
 
 - To run the customer view, cd into the folder that you forked/cloned from github.
 - After double checking that you have all the packages needed installed by running `npm install`, you can run `node BamazonCustomer.js` to run the customer view.
@@ -38,7 +38,7 @@ var connection = mysql.createConnection({
 
 --------
 
-### Challenge #2: Manager View (Next Level)
+### Manager View
 
 - To run the manager view, cd into the folder that you forked/cloned from github.
 - After double checking that you have all the packages needed installed by running `npm install`, you can run `node BamazonManager.js` to run the customer view.
@@ -47,48 +47,6 @@ var connection = mysql.createConnection({
 - Below is a video of the manager view in action.
 
 **** manager view video coming soon ****
-
---------
-
-### Challenge #3: Executive View (Final Level)
-
-**** executive view not completed yet ****
-
-1. Create a new MySQL table called `Departments`. Your table should include the following columns:
-
-	* DepartmentID
-
-	* DepartmentName
-
-	* OverHeadCosts (A dummy number you set for each department)
-
-	* TotalSales
-
-2. Modify your `BamazonCustomer.js` app so that when a customer purchases anything from the store, the program will calculate the total sales from each transaction.
-	* Add the revenue from each transaction to the `TotalSales` column for the related department.
-	* Make sure your app still updates the inventory listed in the `Products` column.
-
-3. Create another Node app called `BamazonExecutive.js`. Running this application will list a set of menu options: 
-	* View Product Sales by Department 
-	* Create New Department
-
-4. When an executive selects `View Product Sales by Department`, the app should display a summarized table in their terminal/bash window. Use the table below as a guide. 
-
-	| DepartmentID | DepartmentName | OverHeadCosts | ProductSales | TotalProfit |
-	|--------------|----------------|---------------|--------------|-------------|
-	| 01           | Electronics    | 10000         | 20000        | 10000       |
-	| 02           | Clothing       | 60000         | 100000       | 40000       |
-
-
-5. The `TotalProfit` should be calculated on the fly using the difference between `OverheadCosts` and `ProductSales`. `TotalProfit` should not be stored in any database. You should use a custom alias. 
-
-6. If you can't get the table to display properly after a few hours, then feel free to go back and just add `TotalProfit` to the `Departments` table.
-
-	* Hint: You will need to use joins to make this work. 
-
-	* Hint: You may need to look into grouping in MySQL.
-
-	* **HINT**: There may be an NPM package that can log the table to the console. What's is it? Good question :)
 
 -------
 
