@@ -62,7 +62,7 @@ function displayStock() {
     }
     clear();
     console.log("----------------------------------------------------------------------");
-    console.log("                          WELCOME TO BAMAZON                          ");
+    console.log("                    WELCOME TO BAMAZON CUSTOMER VIEW                  ");
     console.log("                                                                      ");
     console.log("                     HERE IS WHAT WE HAVE IN STOCK                    ");
     console.log("----------------------------------------------------------------------");
@@ -340,7 +340,7 @@ function updateQuantity() {
                                 //find the id the user selected in the stock array
                                 if (userItem.id == stock[i].ItemID) {
                                     //check to see if the amount in stock and currently in the cart is greater than the quantity entered by the user
-                                    if (stock[i].StockQuantity+cart[index].quantity >= value) {
+                                    if (stock[i].StockQuantity + cart[index].quantity >= value) {
                                         isValid = true;
                                     } else {
                                         isValid = "We do not have that many in stock."
@@ -439,22 +439,3 @@ function updateSQL() {
 
 //START THE SHOPPING EXPERIENCE
 customer();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

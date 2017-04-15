@@ -1,25 +1,27 @@
 {
-  "name": "bamazon",
-  "version": "1.0.1",
-  "description": "bash command amazon emulator",
-  "main": "BamazonCustomer.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rgtalbot/Bamazon.git"
-  },
-  "author": "Ryan Talbot",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rgtalbot/Bamazon/issues"
-  },
-  "homepage": "https://github.com/rgtalbot/Bamazon#readme",
-  "dependencies": {
-    "clear": "0.0.1",
-    "cli-table": "^0.3.1",
-    "inquirer": "^1.1.3",
-    "mysql": "^2.11.1"
-  }
+	"name": "bamazon",
+	"version": "1.0.1",
+	"description": "bash command amazon emulator",
+	"main": "BamazonCustomer.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"manager": "node BamazonManager.js",
+		"customer": "node BamazonCustomer.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/rgtalbot/Bamazon.git"
+	},
+	"author": "Ryan Talbot",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/rgtalbot/Bamazon/issues"
+	},
+	"homepage": "https://github.com/rgtalbot/Bamazon#readme",
+	"dependencies": {
+		"clear": "0.0.1",
+		"cli-table": "^0.3.1",
+		"inquirer": "^1.1.3",
+		"mysql": "^2.11.1"
+	}
 }
